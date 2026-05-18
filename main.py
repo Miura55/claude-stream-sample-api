@@ -19,6 +19,14 @@ class MessageRequest(BaseModel):
 
 @app.post("/messages")
 def create_message(request: MessageRequest):
+    """同期的なレスポンス用のエンドポイント
+
+    Args:
+        request (MessageRequest): メッセージリクエスト
+
+    Returns:
+        dict: 同期的なレスポンス
+    """
     message = claude.messages.create(
         model=request.model,
         max_tokens=request.max_tokens,
@@ -30,6 +38,14 @@ def create_message(request: MessageRequest):
 
 @app.post("/messages/stream", response_class=EventSourceResponse)
 def create_message_stream(request: MessageRequest):
+    """ストリーミングレスポンス用のエンドポイント
+
+    Args:
+        request (MessageRequest): メッセージリクエスト
+
+    Yields:
+        dict: ストリーミングレスポンスの各チャンク
+    """
     with claude.messages.stream(
         model=request.model,
         max_tokens=request.max_tokens,
