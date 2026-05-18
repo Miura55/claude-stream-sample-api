@@ -12,3 +12,9 @@ uv sync
 ```bash
 ANTHROPIC_API_KEY=sk-ant-api03-EXAMPLE
 ```
+
+### 実行方法
+
+```bash
+uvicorn main:app --reload
+```
